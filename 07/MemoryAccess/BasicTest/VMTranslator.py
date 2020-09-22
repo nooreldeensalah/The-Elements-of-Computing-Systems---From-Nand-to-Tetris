@@ -136,32 +136,6 @@ def WriteSegments(command, segment, index):
                 "M=D",
             ]
             return append_newline(Lines)
-        elif segment == "pointer":
-            if index == 0:
-                Lines = [
-                    f"// {command}",
-                    "@SP",
-                    "M=M-1",
-                    "@SP",
-                    "A=M",
-                    "D=M",
-                    "@THIS",
-                    "M=D",
-                ]
-                return append_newline(Lines)
-            if index == 1:
-                Lines = [
-                    f"// {command}",
-                    "@SP",
-                    "M=M-1",
-                    "@SP",
-                    "A=M",
-                    "D=M",
-                    "@THAT",
-                    "M=D",
-                ]
-                return append_newline(Lines)
-
         elif segment in segment_map:
             Lines = [
                 f"// {command}",

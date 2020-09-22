@@ -9,10 +9,10 @@ M=M+1
 // pop local 0
 @SP
 M=M-1
-@0
-D=A
 @LCL
-D=D+M
+D=M
+@0
+D=D+A
 @R13
 M=D
 @SP
@@ -40,10 +40,10 @@ M=M+1
 // pop argument 2
 @SP
 M=M-1
-@2
-D=A
 @ARG
-D=D+M
+D=M
+@2
+D=D+A
 @R13
 M=D
 @SP
@@ -55,10 +55,10 @@ M=D
 // pop argument 1
 @SP
 M=M-1
-@1
-D=A
 @ARG
-D=D+M
+D=M
+@1
+D=D+A
 @R13
 M=D
 @SP
@@ -78,10 +78,10 @@ M=M+1
 // pop this 6
 @SP
 M=M-1
-@6
-D=A
 @THIS
-D=D+M
+D=M
+@6
+D=D+A
 @R13
 M=D
 @SP
@@ -109,10 +109,10 @@ M=M+1
 // pop that 5
 @SP
 M=M-1
-@5
-D=A
 @THAT
-D=D+M
+D=M
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -124,10 +124,10 @@ M=D
 // pop that 2
 @SP
 M=M-1
-@2
-D=A
 @THAT
-D=D+M
+D=M
+@2
+D=D+A
 @R13
 M=D
 @SP
@@ -147,9 +147,9 @@ M=M+1
 // pop temp 6
 @SP
 M=M-1
-@5
-D=A
 @6
+D=A
+@5
 D=D+A
 @R13
 M=D
@@ -201,7 +201,7 @@ M=D
 @R13
 D=M
 @R14
-D=D+M
+D=M+D
 @SP
 A=M
 M=D
@@ -237,7 +237,7 @@ M=D
 @R13
 D=M
 @R14
-D=D-M
+D=M-D
 @SP
 A=M
 M=D
@@ -285,7 +285,7 @@ M=D
 @R13
 D=M
 @R14
-D=D+M
+D=M+D
 @SP
 A=M
 M=D
@@ -309,7 +309,7 @@ M=D
 @R13
 D=M
 @R14
-D=D-M
+D=M-D
 @SP
 A=M
 M=D
@@ -345,7 +345,7 @@ M=D
 @R13
 D=M
 @R14
-D=D+M
+D=M+D
 @SP
 A=M
 M=D
