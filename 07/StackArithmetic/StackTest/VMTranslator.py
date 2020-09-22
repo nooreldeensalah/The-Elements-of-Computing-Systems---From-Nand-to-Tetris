@@ -134,15 +134,18 @@ def WriteArithmetic(command):
             "A=M",
             "M=-1",
             "@SP",
-            "M=M+1" f"@Skip.{label}",
+            "M=M+1",
+            f"@Skip.{label}",
             "0;JEQ",
             f"(False.{label})",
             "@SP",
             "A=M",
             "M=0",
             "@SP",
-            "M=M+1" f"(Skip.{label})",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
     elif command == "lt":
         Lines = pop_two + [
@@ -159,15 +162,18 @@ def WriteArithmetic(command):
             "A=M",
             "M=-1",
             "@SP",
-            "M=M+1" f"@Skip.{label}",
+            "M=M+1",
+            f"@Skip.{label}",
             "0;JEQ",
             f"(False.{label})",
             "@SP",
             "A=M",
             "M=0",
             "@SP",
-            "M=M+1" f"(Skip.{label})",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
     elif command == "gt":
         Lines = pop_two + [
@@ -184,15 +190,18 @@ def WriteArithmetic(command):
             "A=M",
             "M=-1",
             "@SP",
-            "M=M+1" f"@Skip.{label}",
+            "M=M+1",
+            f"@Skip.{label}",
             "0;JEQ",
             f"(False.{label})",
             "@SP",
             "A=M",
             "M=0",
             "@SP",
-            "M=M+1" f"(Skip.{label})",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
 
 
