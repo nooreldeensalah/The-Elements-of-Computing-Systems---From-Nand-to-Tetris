@@ -14,3 +14,27 @@ A=M
 M=D
 @SP
 M=M+1
+// add
+@SP
+M=M-1
+@SP
+A=M
+D=M
+@R13
+M=D
+@SP
+M=M-1
+@SP
+A=M
+D=M
+@R14
+M=D
+@R13
+D=M
+@R14
+D=M+D
+@SP
+A=M
+M=D
+@SP
+M=M+1

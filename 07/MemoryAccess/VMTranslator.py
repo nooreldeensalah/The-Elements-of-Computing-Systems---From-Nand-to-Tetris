@@ -18,7 +18,7 @@ def CommandType(command):
     elif command.startswith("pop"):
         return "pop"
     elif command in arithmetic_operands:
-        return 'arithmetic'
+        return "arithmetic"
 
 
 def WriteSegments(command, segment, index):
@@ -36,7 +36,9 @@ def WriteSegments(command, segment, index):
             ]
             return append_newline(Lines)
         elif segment == "static":
-            pass
+            Lines = [
+                f"// {command}",
+            ]
 
 
 def WriteArithmetic(command):
@@ -128,21 +130,22 @@ def WriteArithmetic(command):
             f"@False.{label}",
             "D;JNE",
             f"(True.{label})",
-            '@SP',
-            'A=M',
-            'M=-1',
-            '@SP',
-            'M=M+1'
-            f'@Skip.{label}',
-            '0;JEQ',
-            f'(False.{label})',
-            '@SP',
-            'A=M',
-            'M=0',
-            '@SP',
-            'M=M+1'
-            f"(Skip.{label})"
+            "@SP",
+            "A=M",
+            "M=-1",
+            "@SP",
+            "M=M+1",
+            f"@Skip.{label}",
+            "0;JEQ",
+            f"(False.{label})",
+            "@SP",
+            "A=M",
+            "M=0",
+            "@SP",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
     elif command == "lt":
         Lines = pop_two + [
@@ -155,21 +158,22 @@ def WriteArithmetic(command):
             f"@False.{label}",
             "D;JGT",
             f"(True.{label})",
-            '@SP',
-            'A=M',
-            'M=-1',
-            '@SP',
-            'M=M+1'
-            f'@Skip.{label}',
-            '0;JEQ',
-            f'(False.{label})',
-            '@SP',
-            'A=M',
-            'M=0',
-            '@SP',
-            'M=M+1'
-            f"(Skip.{label})"
+            "@SP",
+            "A=M",
+            "M=-1",
+            "@SP",
+            "M=M+1",
+            f"@Skip.{label}",
+            "0;JEQ",
+            f"(False.{label})",
+            "@SP",
+            "A=M",
+            "M=0",
+            "@SP",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
     elif command == "gt":
         Lines = pop_two + [
@@ -182,21 +186,22 @@ def WriteArithmetic(command):
             f"@False.{label}",
             "D;JLE",
             f"(True.{label})",
-            '@SP',
-            'A=M',
-            'M=-1',
-            '@SP',
-            'M=M+1'
-            f'@Skip.{label}',
-            '0;JEQ',
-            f'(False.{label})',
-            '@SP',
-            'A=M',
-            'M=0',
-            '@SP',
-            'M=M+1'
-            f"(Skip.{label})"
+            "@SP",
+            "A=M",
+            "M=-1",
+            "@SP",
+            "M=M+1",
+            f"@Skip.{label}",
+            "0;JEQ",
+            f"(False.{label})",
+            "@SP",
+            "A=M",
+            "M=0",
+            "@SP",
+            "M=M+1",
+            f"(Skip.{label})",
         ]
+        label += 1
         return append_newline(Lines)
 
 
@@ -219,39 +224,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# @SP
-# M=M-1
-# @SP
-# A=M
-# D=M
-# @R13
-# M=D
-# @SP
-# M=M-1
-# @SP
-# A=M
-# D=M
-# @R14
-# M=D
-# @R13
-# D=M
-# @R14
-# D=M-D
-# @True.0
-# D;JEQ
-# @False.0
-# D;JNE
-# (True.0)
-# @SP
-# A=M
-# M=-1
-# @SP
-# M=M+1
-# (False.0)
-# @SP
-# A=M
-# M=0
-# @SP
-# M=M+1
