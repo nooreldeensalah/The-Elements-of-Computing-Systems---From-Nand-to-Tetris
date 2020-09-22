@@ -38,7 +38,123 @@ def WriteSegments(command, segment, index):
         elif segment == "static":
             Lines = [
                 f"// {command}",
+                f"@{stripped_name}.{index}",
+                "D=M",
+                "@SP",
+                "A=M",
+                "M=D",
+                "@SP",
+                "M=M+1",
             ]
+            return append_newline(Lines)
+        elif segment == "temp":
+            Lines = [
+                f"// {command}",
+                "@5",
+                "D=A",
+                f"@{index}",
+                "D=D+A",
+                "A=D",
+                "D=M",
+                "@SP",
+                "A=M",
+                "M=D",
+                "@SP",
+                "M=M+1",
+            ]
+            return append_newline(Lines)
+        elif segment == "pointer":
+            if index == 0:
+                Lines = [
+                    f"// {command}",
+                    "@THIS",
+                    "D=M",
+                    "@SP",
+                    "A=M",
+                    "M=D",
+                    "@SP",
+                    "M=M+1",
+                ]
+                return append_newline(Lines)
+            elif index == 1:
+                Lines = [
+                    f"// {command}",
+                    "@THAT",
+                    "D=M",
+                    "@SP",
+                    "A=M",
+                    "M=D",
+                    "@SP",
+                    "M=M+1",
+                ]
+                return append_newline(Lines)
+        elif segment in segment_map:
+            Lines = [
+                f"// {command}",
+                f"@{segment_map[segment]}",
+                "D=M",
+                f"@{index}",
+                "D=D+A",
+                "A=D",
+                "D=M",
+                "@SP",
+                "A=M",
+                "M=D",
+                "@SP",
+                "M=M+1",
+            ]
+            return append_newline(Lines)
+    elif CommandType(command) == "pop":
+        if segment == "static":
+            Lines = [
+                f"// {command}",
+                "@SP",
+                "M=M-1",
+                "@SP",
+                "A=M",
+                "D=M",
+                f"@{stripped_name}.{index}",
+                "M=D",
+            ]
+            return append_newline(Lines)
+        elif segment == "temp":
+            Lines = [
+                f"// {command}",
+                "@SP",
+                "M=M-1",
+                f"@{index}",
+                "D=A",
+                "@5",
+                "D=D+A",
+                "@R13",
+                "M=D",
+                "@SP",
+                "A=M",
+                "D=M",
+                "@R13",
+                "A=M",
+                "M=D",
+            ]
+            return append_newline(Lines)
+        elif segment in segment_map:
+            Lines = [
+                f"// {command}",
+                "@SP",
+                "M=M-1",
+                f"@{segment_map[segment]}",
+                "D=M",
+                f"@{index}",
+                "D=D+A",
+                "@R13",
+                "M=D",
+                "@SP",
+                "A=M",
+                "D=M",
+                "@R13",
+                "A=M",
+                "M=D",
+            ]
+            return append_newline(Lines)
 
 
 def WriteArithmetic(command):
