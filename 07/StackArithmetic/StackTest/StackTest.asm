@@ -44,7 +44,7 @@ M=-1
 @SP
 M=M+1
 @Skip.0
-0;JEQ
+0;JMP
 (False.0)
 @SP
 A=M
@@ -98,7 +98,7 @@ M=-1
 @SP
 M=M+1
 @Skip.1
-0;JEQ
+0;JMP
 (False.1)
 @SP
 A=M
@@ -152,7 +152,7 @@ M=-1
 @SP
 M=M+1
 @Skip.2
-0;JEQ
+0;JMP
 (False.2)
 @SP
 A=M
@@ -198,7 +198,7 @@ D=M-D
 @True.3
 D;JLT
 @False.3
-D;JGT
+D;JGE
 (True.3)
 @SP
 A=M
@@ -206,7 +206,7 @@ M=-1
 @SP
 M=M+1
 @Skip.3
-0;JEQ
+0;JMP
 (False.3)
 @SP
 A=M
@@ -252,7 +252,7 @@ D=M-D
 @True.4
 D;JLT
 @False.4
-D;JGT
+D;JGE
 (True.4)
 @SP
 A=M
@@ -260,7 +260,7 @@ M=-1
 @SP
 M=M+1
 @Skip.4
-0;JEQ
+0;JMP
 (False.4)
 @SP
 A=M
@@ -306,7 +306,7 @@ D=M-D
 @True.5
 D;JLT
 @False.5
-D;JGT
+D;JGE
 (True.5)
 @SP
 A=M
@@ -314,7 +314,7 @@ M=-1
 @SP
 M=M+1
 @Skip.5
-0;JEQ
+0;JMP
 (False.5)
 @SP
 A=M
@@ -360,7 +360,7 @@ D=M-D
 @True.6
 D;JGT
 @False.6
-D;JLT
+D;JLE
 (True.6)
 @SP
 A=M
@@ -368,7 +368,7 @@ M=-1
 @SP
 M=M+1
 @Skip.6
-0;JEQ
+0;JMP
 (False.6)
 @SP
 A=M
@@ -414,7 +414,7 @@ D=M-D
 @True.7
 D;JGT
 @False.7
-D;JLT
+D;JLE
 (True.7)
 @SP
 A=M
@@ -422,7 +422,7 @@ M=-1
 @SP
 M=M+1
 @Skip.7
-0;JEQ
+0;JMP
 (False.7)
 @SP
 A=M
@@ -468,7 +468,7 @@ D=M-D
 @True.8
 D;JGT
 @False.8
-D;JLT
+D;JLE
 (True.8)
 @SP
 A=M
@@ -476,7 +476,7 @@ M=-1
 @SP
 M=M+1
 @Skip.8
-0;JEQ
+0;JMP
 (False.8)
 @SP
 A=M
