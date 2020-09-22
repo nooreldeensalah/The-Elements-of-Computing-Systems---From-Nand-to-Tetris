@@ -196,7 +196,7 @@ D=M
 @R14
 D=M-D
 @True.3
-D;JLE
+D;JLT
 @False.3
 D;JGT
 (True.3)
@@ -250,7 +250,7 @@ D=M
 @R14
 D=M-D
 @True.4
-D;JLE
+D;JLT
 @False.4
 D;JGT
 (True.4)
@@ -304,7 +304,7 @@ D=M
 @R14
 D=M-D
 @True.5
-D;JLE
+D;JLT
 @False.5
 D;JGT
 (True.5)
@@ -360,7 +360,7 @@ D=M-D
 @True.6
 D;JGT
 @False.6
-D;JLE
+D;JLT
 (True.6)
 @SP
 A=M
@@ -414,7 +414,7 @@ D=M-D
 @True.7
 D;JGT
 @False.7
-D;JLE
+D;JLT
 (True.7)
 @SP
 A=M
@@ -468,7 +468,7 @@ D=M-D
 @True.8
 D;JGT
 @False.8
-D;JLE
+D;JLT
 (True.8)
 @SP
 A=M
