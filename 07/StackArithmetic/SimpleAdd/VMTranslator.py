@@ -17,8 +17,6 @@ def CommandType(command):
         return "push"
     elif command.startswith("pop"):
         return "pop"
-    elif command in arithmetic_operands:
-        return 'arithmetic'
 
 
 def WriteSegments(command, segment, index):
