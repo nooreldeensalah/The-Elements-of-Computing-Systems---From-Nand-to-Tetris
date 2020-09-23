@@ -64,7 +64,7 @@ def WriteSegments(command, segment, index):
             ]
             return append_newline(Lines)
         elif segment == "pointer":
-            if index == 0:
+            if index == '0':
                 Lines = [
                     f"// {command}",
                     "@THIS",
@@ -76,7 +76,7 @@ def WriteSegments(command, segment, index):
                     "M=M+1",
                 ]
                 return append_newline(Lines)
-            elif index == 1:
+            elif index == '1':
                 Lines = [
                     f"// {command}",
                     "@THAT",
@@ -137,7 +137,7 @@ def WriteSegments(command, segment, index):
             ]
             return append_newline(Lines)
         elif segment == "pointer":
-            if index == 0:
+            if index == '0':
                 Lines = [
                     f"// {command}",
                     "@SP",
@@ -149,7 +149,7 @@ def WriteSegments(command, segment, index):
                     "M=D",
                 ]
                 return append_newline(Lines)
-            if index == 1:
+            if index == '1':
                 Lines = [
                     f"// {command}",
                     "@SP",
