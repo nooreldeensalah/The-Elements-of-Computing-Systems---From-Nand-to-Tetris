@@ -2,7 +2,7 @@ from sys import argv
 
 file_name = argv[1]
 output_file = file_name[:-3] + ".asm"
-stripped_name = file_name[:-3]
+stripped_name = file_name.split('/')[-1][:-3]
 arithmetic_operands = ["add", "sub", "and", "or", "neg", "not", "lt", "gt", "eq"]
 segment_map = {"this": "THIS", "that": "THAT", "argument": "ARG", "local": "LCL"}
 label = 0
