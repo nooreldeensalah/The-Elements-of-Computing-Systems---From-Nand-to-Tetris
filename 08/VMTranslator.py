@@ -1,8 +1,10 @@
 from sys import argv
+from os.path import isfile
+from os import listdir
 
-file_name = argv[1]
-output_file = file_name[:-3] + ".asm"
-stripped_name = file_name.split('/')[-1][:-3]
+input_arg = argv[1]
+output_file = input_arg[:-3] + ".asm"
+stripped_name = input_arg.split("/")[-1][:-3]
 arithmetic_operands = ["add", "sub", "and", "or", "neg", "not", "lt", "gt", "eq"]
 segment_map = {"this": "THIS", "that": "THAT", "argument": "ARG", "local": "LCL"}
 label = 0
@@ -64,7 +66,7 @@ def WriteSegments(command, segment, index):
             ]
             return append_newline(Lines)
         elif segment == "pointer":
-            if index == '0':
+            if index == "0":
                 Lines = [
                     f"// {command}",
                     "@THIS",
@@ -76,7 +78,7 @@ def WriteSegments(command, segment, index):
                     "M=M+1",
                 ]
                 return append_newline(Lines)
-            elif index == '1':
+            elif index == "1":
                 Lines = [
                     f"// {command}",
                     "@THAT",
@@ -137,7 +139,7 @@ def WriteSegments(command, segment, index):
             ]
             return append_newline(Lines)
         elif segment == "pointer":
-            if index == '0':
+            if index == "0":
                 Lines = [
                     f"// {command}",
                     "@SP",
@@ -149,7 +151,7 @@ def WriteSegments(command, segment, index):
                     "M=D",
                 ]
                 return append_newline(Lines)
-            if index == '1':
+            if index == "1":
                 Lines = [
                     f"// {command}",
                     "@SP",
@@ -347,8 +349,8 @@ def WriteArithmetic(command):
         return append_newline(Lines)
 
 
-def Parser(file):
-    with open(file, "r") as reader, open(output_file, "w") as writer:
+def Parser(file_name):
+    with open(file_name, "r") as reader, open(output_file, "w") as writer:
         for line in reader.readlines():
             command = line.split("//")[0].strip()
             if command:
@@ -361,7 +363,12 @@ def Parser(file):
 
 
 def main():
-    Parser(file_name)
+    if isfile(input_arg):
+        Parser(input_arg)
+    else:
+        vm_files = list(filter(lambda x: x.endswith("vm"), listdir(input_arg)))
+        for vm_file in vm_files:
+            Parser(vm_file)
 
 
 if __name__ == "__main__":
