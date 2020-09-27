@@ -8,6 +8,7 @@ stripped_name = input_arg.split("/")[-1].strip(".vm")
 arithmetic_operands = ["add", "sub", "and", "or", "neg", "not", "lt", "gt", "eq"]
 segment_map = {"this": "THIS", "that": "THAT", "argument": "ARG", "local": "LCL"}
 label = 0
+function_name = "null"
 
 
 def append_newline(Lines):
@@ -36,15 +37,30 @@ def CommandType(command):
 
 
 def write_label(label):
-    pass
+    label_tag = label[6:]
+    Lines = [f"// {label}", f"({function_name}${label_tag})"]
+    return append_newline(Lines)
 
 
 def write_goto(label):
-    pass
+    label_tag = label[6:]
+    Lines = [f"// {label}", f"@{function_name}${label_tag}", "0;JMP"]
+    return append_newline(Lines)
 
 
 def write_if(label):
-    pass
+    label_tag = label[8:]
+    Lines = [
+        f"// {label}",
+        "@SP",
+        "M=M-1",
+        "@SP",
+        "A=M",
+        "D=M",
+        f"@{function_name}${label_tag}",
+        "D;JNE"
+    ]
+    return append_newline(Lines)
 
 
 def write_return():
