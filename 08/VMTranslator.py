@@ -58,21 +58,148 @@ def write_if(label):
         "A=M",
         "D=M",
         f"@{function_name}${label_tag}",
-        "D;JNE"
+        "D;JNE",
     ]
     return append_newline(Lines)
 
 
 def write_return():
-    pass
+    Lines = [
+        f"// {label}",
+        "@LCL",
+        "D=M",
+        "@R13",  # EndFrame
+        "M=D",
+        "@5",
+        "D=D-A",
+        "A=D",
+        "D=M",
+        "@R14",  # RET
+        "M=D",
+        "@SP",
+        "M=M-1",
+        "@SP",
+        "A=M",
+        "D=M",
+        "@ARG",
+        "A=M",
+        "M=D",
+        "@ARG",
+        "D=M",
+        "@SP",
+        "M=D+1",
+        "@R13",
+        "D=M",
+        "@1",
+        "D=D-A",
+        "A=D",
+        "D=M",
+        "@THAT",
+        "M=D",
+        "@R13",
+        "D=M",
+        "@2",
+        "D=D-A",
+        "A=D",
+        "D=M",
+        "@THIS",
+        "M=D",
+        "@R13",
+        "D=M",
+        "@3",
+        "D=D-A",
+        "A=D",
+        "D=M",
+        "@ARG",
+        "M=D",
+        "@R13",
+        "D=M",
+        "@4",
+        "D=D-A",
+        "A=D",
+        "D=M",
+        "@LCL",
+        "M=D",
+        "@R14",
+        "0;JMP",
+    ]
+    return append_newline(Lines)
 
 
-def write_call(function_name, num_args):
-    pass
+def write_call(command):
+    global function_name
+    num_args = int(command[-1])
+    function_name = command.split()[1]
+    Lines = [
+        f"// {label}",
+        "" "@LCL",  # TODO: push return-address  # Push LCL
+        "D=M",
+        "@SP",
+        "A=M",
+        "M=D",
+        "@SP",
+        "M=M+1",
+        "@ARG",  # Push ARG
+        "D=M",
+        "@SP",
+        "A=M",
+        "M=D",
+        "@SP",
+        "M=M+1",
+        "@THIS",  # Push THIS
+        "D=M",
+        "@SP",
+        "A=M",
+        "M=D",
+        "@SP",
+        "M=M+1",
+        "@THAT",
+        "D=M",
+        "@SP",
+        "A=M",
+        "M=D",
+        "@SP",
+        "M=M+1",
+        "D=M",
+        "@5" "D=D-A",
+        f"@{num_args}",
+        "D=D-A",
+        "@ARG",
+        "M=D",
+        "@SP",
+        "D=M",
+        "@LCL",
+        "M=D",
+        "@{function_name}",
+        "0;JMP",
+        # TODO: (return-address)
+    ]
 
 
-def write_function(function_name, num_locals):
-    pass
+def write_function(command):
+    global function_name
+    local_vars_num = int(command[-1])
+    function_name = command.split()[1]
+    Lines = [
+        f"// {command}",
+        f"({function_name})",
+        f"@{local_vars_num}",
+        "D=A",
+        "@R13",
+        "M=D",
+        f"({function_name}$push_zeroes)",
+        "@SP",
+        "A=M",
+        "M=0",
+        "@SP",
+        "M=M+1",
+        "@R13",
+        "M=M-1",
+        "D=M",
+        f"@{function_name}$push_zeroes",
+        "D;JGT",
+    ]
+    return append_newline(Lines)
 
 
 def WriteSegments(command, segment, index):
@@ -424,7 +551,7 @@ def Parser(*files):
                     elif CommandType(command) == "call":
                         writer.writelines(write_call(command))
                     elif CommandType(command) == "return":
-                        writer.writelines(write_return(command))
+                        writer.writelines(write_return())
 
 
 def main():
