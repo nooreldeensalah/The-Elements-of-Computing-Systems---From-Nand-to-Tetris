@@ -3,8 +3,8 @@ from os.path import isfile
 from os import listdir
 
 input_arg = argv[1]
-output_file = input_arg[:-3] + ".asm"
-stripped_name = input_arg.split("/")[-1][:-3]
+output_file = input_arg.strip(".vm") + ".asm"
+stripped_name = input_arg.split("/")[-1].strip(".vm")
 arithmetic_operands = ["add", "sub", "and", "or", "neg", "not", "lt", "gt", "eq"]
 segment_map = {"this": "THIS", "that": "THAT", "argument": "ARG", "local": "LCL"}
 label = 0
@@ -21,6 +21,42 @@ def CommandType(command):
         return "pop"
     elif command in arithmetic_operands:
         return "arithmetic"
+    elif command.startswith("label"):
+        return "label"
+    elif command.startswith("goto"):
+        return "goto"
+    elif command.startswith("if"):
+        return "if"
+    elif command.startswith("call"):
+        return "call"
+    elif command.startswith("function"):
+        return "function"
+    elif command.startswith("return"):
+        return "return"
+
+
+def write_label(label):
+    pass
+
+
+def write_goto(label):
+    pass
+
+
+def write_if(label):
+    pass
+
+
+def write_return():
+    pass
+
+
+def write_call(function_name, num_args):
+    pass
+
+
+def write_function(function_name, num_locals):
+    pass
 
 
 def WriteSegments(command, segment, index):
@@ -349,17 +385,30 @@ def WriteArithmetic(command):
         return append_newline(Lines)
 
 
-def Parser(file_name):
-    with open(file_name, "r") as reader, open(output_file, "w") as writer:
-        for line in reader.readlines():
-            command = line.split("//")[0].strip()
-            if command:
-                if CommandType(command) == "push" or CommandType(command) == "pop":
-                    segment = command.split()[1]
-                    index = command.split()[2]
-                    writer.writelines(WriteSegments(command, segment, index))
-                elif CommandType(command) == "arithmetic":
-                    writer.writelines(WriteArithmetic(command))
+def Parser(*files):
+    for file in files:
+        with open(file, "r") as reader, open(output_file, "a") as writer:
+            for line in reader.readlines():
+                command = line.split("//")[0].strip()
+                if command:
+                    if CommandType(command) == "push" or CommandType(command) == "pop":
+                        segment = command.split()[1]
+                        index = command.split()[2]
+                        writer.writelines(WriteSegments(command, segment, index))
+                    elif CommandType(command) == "arithmetic":
+                        writer.writelines(WriteArithmetic(command))
+                    elif CommandType(command) == "label":
+                        writer.writelines(write_label(command))
+                    elif CommandType(command) == "goto":
+                        writer.writelines(write_goto(command))
+                    elif CommandType(command) == "if":
+                        writer.writelines(write_if(command))
+                    elif CommandType(command) == "function":
+                        writer.writelines(write_function(command))
+                    elif CommandType(command) == "call":
+                        writer.writelines(write_call(command))
+                    elif CommandType(command) == "return":
+                        writer.writelines(write_return(command))
 
 
 def main():
@@ -367,8 +416,7 @@ def main():
         Parser(input_arg)
     else:
         vm_files = list(filter(lambda x: x.endswith("vm"), listdir(input_arg)))
-        for vm_file in vm_files:
-            Parser(vm_file)
+        Parser(vm_files)
 
 
 if __name__ == "__main__":
