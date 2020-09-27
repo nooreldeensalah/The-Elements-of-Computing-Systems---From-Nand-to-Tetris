@@ -43,7 +43,7 @@ def write_label(label):
 
 
 def write_goto(label):
-    label_tag = label[6:]
+    label_tag = label[5:]
     Lines = [f"// {label}", f"@{function_name}${label_tag}", "0;JMP"]
     return append_newline(Lines)
 
