@@ -66,7 +66,7 @@ def write_if(label):
 
 def write_return():
     Lines = [
-        f"// {label}",
+        "// return",
         "@LCL",
         "D=M",
         "@R13",  # EndFrame
@@ -200,6 +200,8 @@ def write_function(command):
         "D=A",
         "@R13",
         "M=D",
+        f"@{function_name}$skip_zeroes",
+        "D;JEQ",
         f"({function_name}$push_zeroes)",
         "@SP",
         "A=M",
@@ -211,6 +213,7 @@ def write_function(command):
         "D=M",
         f"@{function_name}$push_zeroes",
         "D;JGT",
+        f"({function_name}$skip_zeroes)",
     ]
     return append_newline(Lines)
 
@@ -542,12 +545,13 @@ def WriteArithmetic(command):
 
 
 def write_init():
-    Lines = ["@256", "D=M", "@SP", "A=M", "M=D"]
+    Lines = ["@256", "D=A", "@SP", "M=D"]
     call_init = write_call("call Sys.init 0")
     return append_newline(Lines) + call_init
 
 
 def Parser(files, isdir=False, dir_name="", output_path=output_file):
+    global stripped_name
     if isinstance(files, str):
         files = [files]
     if isdir:
@@ -557,6 +561,7 @@ def Parser(files, isdir=False, dir_name="", output_path=output_file):
     for file in files:
         if isdir:
             file = f"./{dir_name}/" + file
+            stripped_name = file.split("/")[-1].strip(".vm")
         with open(file, "r") as reader, open(output_path, "a") as writer:
             for line in reader.readlines():
                 command = line.split("//")[0].strip()
