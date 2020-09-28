@@ -9,6 +9,7 @@ arithmetic_operands = ["add", "sub", "and", "or", "neg", "not", "lt", "gt", "eq"
 segment_map = {"this": "THIS", "that": "THAT", "argument": "ARG", "local": "LCL"}
 label = 0
 function_name = "null"
+count = 1
 
 
 def append_newline(Lines):
@@ -121,18 +122,25 @@ def write_return():
         "@LCL",
         "M=D",
         "@R14",
+        'A=M',
         "0;JMP",
     ]
     return append_newline(Lines)
 
 
 def write_call(command):
-    global function_name
+    global count
     num_args = int(command[-1])
-    function_name = command.split()[1]
     Lines = [
-        f"// {label}",
-        "" "@LCL",  # TODO: push return-address  # Push LCL
+        f"// {command}",
+        "@{function_name}$ret.{count}",
+        'D=A',
+        '@SP',
+        'A=M',
+        'M=D',
+        '@SP',
+        'M=M+1',
+        "@LCL",   # Push LCL
         "D=M",
         "@SP",
         "A=M",
@@ -172,8 +180,10 @@ def write_call(command):
         "M=D",
         "@{function_name}",
         "0;JMP",
-        # TODO: (return-address)
+        f"({function_name}$ret.{count})"
     ]
+    count += 1
+    return append_newline(Lines)
 
 
 def write_function(command):
