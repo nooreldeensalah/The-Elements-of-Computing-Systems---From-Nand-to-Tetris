@@ -122,7 +122,7 @@ def write_return():
         "@LCL",
         "M=D",
         "@R14",
-        'A=M',
+        "A=M",
         "0;JMP",
     ]
     return append_newline(Lines)
@@ -134,13 +134,13 @@ def write_call(command):
     Lines = [
         f"// {command}",
         "@{function_name}$ret.{count}",
-        'D=A',
-        '@SP',
-        'A=M',
-        'M=D',
-        '@SP',
-        'M=M+1',
-        "@LCL",   # Push LCL
+        "D=A",
+        "@SP",
+        "A=M",
+        "M=D",
+        "@SP",
+        "M=M+1",
+        "@LCL",  # Push LCL
         "D=M",
         "@SP",
         "A=M",
@@ -180,7 +180,7 @@ def write_call(command):
         "M=D",
         "@{function_name}",
         "0;JMP",
-        f"({function_name}$ret.{count})"
+        f"({function_name}$ret.{count})",
     ]
     count += 1
     return append_newline(Lines)
@@ -538,9 +538,13 @@ def WriteArithmetic(command):
         return append_newline(Lines)
 
 
-def Parser(*files):
+def Parser(files, isdir=False, dir_name="", output_path=output_file):
+    if isinstance(files, str):
+        files = [files]
     for file in files:
-        with open(file, "r") as reader, open(output_file, "a") as writer:
+        if isdir:
+            file = f"./{dir_name}/" + file
+        with open(file, "r") as reader, open(output_path, "a") as writer:
             for line in reader.readlines():
                 command = line.split("//")[0].strip()
                 if command:
@@ -569,7 +573,8 @@ def main():
         Parser(input_arg)
     else:
         vm_files = list(filter(lambda x: x.endswith("vm"), listdir(input_arg)))
-        Parser(vm_files)
+        output_dir = f"./{input_arg}/" + output_file
+        Parser(vm_files, isdir=True, dir_name=input_arg, output_path=output_dir)
 
 
 if __name__ == "__main__":
