@@ -130,10 +130,12 @@ def write_return():
 
 def write_call(command):
     global count
+    global function_name
     num_args = int(command[-1])
+    function_name = command.split()[1]
     Lines = [
         f"// {command}",
-        "@{function_name}$ret.{count}",
+        f"@{function_name}$ret.{count}",
         "D=A",
         "@SP",
         "A=M",
@@ -169,7 +171,8 @@ def write_call(command):
         "@SP",
         "M=M+1",
         "D=M",
-        "@5" "D=D-A",
+        "@5",
+        "D=D-A",
         f"@{num_args}",
         "D=D-A",
         "@ARG",
@@ -178,7 +181,7 @@ def write_call(command):
         "D=M",
         "@LCL",
         "M=D",
-        "@{function_name}",
+        f"@{function_name}",
         "0;JMP",
         f"({function_name}$ret.{count})",
     ]
@@ -538,9 +541,19 @@ def WriteArithmetic(command):
         return append_newline(Lines)
 
 
+def write_init():
+    Lines = ["@256", "D=M", "@SP", "A=M", "M=D"]
+    call_init = write_call("call Sys.init 0")
+    return append_newline(Lines) + call_init
+
+
 def Parser(files, isdir=False, dir_name="", output_path=output_file):
     if isinstance(files, str):
         files = [files]
+    if isdir:
+        init_writer = open(output_path, "a")
+        init_writer.writelines(write_init())
+        init_writer.close()
     for file in files:
         if isdir:
             file = f"./{dir_name}/" + file
