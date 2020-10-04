@@ -1,0 +1,121 @@
+class Main
+{
+    function void main() 
+    {
+        var char userTurn, userSymbol, opponentSymbol, gameMode;
+        var Array choices, gameBoard;
+        var boolean winner;
+        /* Drawing the border */
+        /* Accepting input from user */
+        let choices = Main.userPrompt();
+        let userTurn = choices[0];
+        let userSymbol = choices[1];
+        let gameMode = choices[2];
+        do Screen.clearScreen();
+        do Output.moveCursor(0,0);
+        do Board.drawBorder();
+        if (userSymbol = 88) {let opponentSymbol = 79;} else {let opponentSymbol = 88;}
+        /* Creating an empty board (9 cells array) */
+        let gameBoard = Board.createEmptyBoard();
+        let winner = false;
+        if (gameMode = 49) // Single player.
+        {
+            if (userTurn = 89)
+            {
+                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                {
+                    do Board.userMove(gameBoard, userSymbol);
+                    let winner = Board.isWinning(gameBoard);
+                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    {
+                        do Board.randomMove(gameBoard, opponentSymbol);
+                        let winner = Board.isWinning(gameBoard);
+                    }
+                }
+            }
+            else
+            {   while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                {
+                    do Board.randomMove(gameBoard, opponentSymbol);
+                    let winner = Board.isWinning(gameBoard);
+                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    {
+                        do Board.userMove(gameBoard, userSymbol);
+                        let winner = Board.isWinning(gameBoard);
+                    }
+                }
+            }
+        }
+        if (gameMode = 50) // Two players. 
+        {
+            if (userTurn = 89)
+            {
+                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                {
+                    do Board.userMove(gameBoard, userSymbol);
+                    let winner = Board.isWinning(gameBoard);
+                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    {
+                        do Board.userMove(gameBoard, opponentSymbol);
+                        let winner = Board.isWinning(gameBoard);
+                    }
+                }
+            }
+            else
+            {
+                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                {
+                    do Board.userMove(gameBoard, opponentSymbol);
+                    let winner = Board.isWinning(gameBoard);
+                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    {
+                        do Board.userMove(gameBoard, userSymbol);
+                        let winner = Board.isWinning(gameBoard);
+                    }
+
+                }
+            }
+        }
+        if (~winner & (Board.emptyCellsNum(gameBoard) = 0))
+        {
+            do Output.println();
+            do Output.printString("Tie!");
+        }
+        return;
+        
+    }
+    function Array userPrompt()
+    {
+        var Array choices;
+        let choices = Array.new(3);
+        do Output.printString("Do you want to play first?");
+        while (~(choices[0]=78) & ~(choices[0]=89))
+        {
+            do Output.println();
+            do Output.printString("Type 'Y' for yes or 'N' for no");
+            do Output.println();
+            let choices[0] = Keyboard.readChar("");
+        }
+        while(~(choices[1]=79) & ~(choices[1]=88))
+        {
+            do Output.println();
+            do Output.printString("Choose your symbol 'X' or 'O'");
+            do Output.println();
+            let choices[1] = Keyboard.readChar("");
+        }
+        do Output.println();
+        do Output.printString("Choose game mode");
+        while(~(choices[2]=49) & ~(choices[2]=50))
+        {
+            do Output.println();
+            do Output.printString("For single player mode: Type '1'");
+            do Output.println();
+            do Output.printString("For two players mode: Type '2'");
+            do Output.println();
+            let choices[2] = Keyboard.readChar("");
+        }
+        return choices;
+    }
+    
+
+}
