@@ -1,0 +1,23 @@
+class Main
+{
+    function void main() 
+    {
+        var char userTurn, userSymbol, opponentSymbol, gameMode;
+        var Array choices;
+        var Board gameBoard;
+        /* Splash screen to adjust the input delay as the random seed */
+        do Utils.splashScreen();
+        /* Accepting input from user */
+        let choices = Utils.userPrompt();
+        let userTurn = choices[0];
+        let userSymbol = choices[1];
+        let gameMode = choices[2];
+        if (userSymbol = 88) {let opponentSymbol = 79;} else {let opponentSymbol = 88;}
+        /* Creating an empty board and starting the game. */
+        let gameBoard = Board.new();
+        do gameBoard.play(gameMode, userTurn, userSymbol, opponentSymbol);
+        do gameBoard.dispose();
+        return;
+    }
+
+}

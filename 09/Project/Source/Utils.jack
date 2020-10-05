@@ -1,0 +1,55 @@
+class Utils 
+{
+    // Shows a splash screen to the user.
+    function void splashScreen()
+    {
+        var int randSeed;
+        do Output.moveCursor(11, 23);
+        do Output.printString("Welcome to TicTacToe!");
+        do Output.moveCursor(12,20);
+        do Output.printString("Press any key to continue...");
+        while (~Keyboard.keyPressed())
+        {
+            let randSeed = randSeed + 1;
+        }
+        do Screen.clearScreen();
+        do Output.moveCursor(0,0);
+        do Random.setSeed(randSeed);
+        return;
+    }
+    function Array userPrompt() // Interactive input with user, takes input values, validates them, stores them into an array then returns it.
+    {
+        var Array choices;
+        let choices = Array.new(3);
+        do Output.printString("Do you want to play first?");
+        while (~(choices[0]=78) & ~(choices[0]=89)) // if choice[0] = 'Y' or 'N'
+        {
+            do Output.println();
+            do Output.printString("Type 'Y' for yes or 'N' for no");
+            do Output.println();
+            let choices[0] = Keyboard.readChar("");
+        }
+        while(~(choices[1]=79) & ~(choices[1]=88)) // if choices[1] = 'X' or 'O'
+        {
+            do Output.println();
+            do Output.printString("Choose your symbol 'X' or 'O'");
+            do Output.println();
+            let choices[1] = Keyboard.readChar("");
+        }
+        do Output.println();
+        do Output.printString("Choose game mode");
+        while(~(choices[2]=49) & ~(choices[2]=50)) // If choices[2] = '1' or '2' (the ASCII equivalent of 1 and 2)
+        {
+            do Output.println();
+            do Output.printString("For single player mode: Type '1'");
+            do Output.println();
+            do Output.printString("For two players mode: Type '2'");
+            do Output.println();
+            let choices[2] = Keyboard.readChar("");
+        }
+        /* Clearing the screen and resetting cursor location */
+        do Screen.clearScreen();
+        do Output.moveCursor(0,0);
+        return choices;
+    } 
+}
