@@ -342,6 +342,13 @@ pop pointer 1
 push that 0
 call Board.equals3 3
 or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
 push constant 0
 push argument 0
 add
@@ -358,7 +365,6 @@ add
 pop pointer 1
 push that 0
 call Board.equals3 3
-or
 push constant 1
 push argument 0
 add
@@ -393,13 +399,13 @@ pop pointer 1
 push that 0
 call Board.equals3 3
 or
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push constant 0
 not
 return
-label IF_FALSE0
+label IF_FALSE1
 push constant 0
 push argument 0
 add
@@ -433,13 +439,13 @@ pop pointer 1
 push that 0
 call Board.equals3 3
 or
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push constant 0
 not
 return
-label IF_FALSE1
+label IF_FALSE2
 push constant 0
 return
 function Board.equals3 0
