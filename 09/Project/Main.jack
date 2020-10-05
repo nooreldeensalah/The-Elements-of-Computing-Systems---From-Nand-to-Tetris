@@ -22,11 +22,11 @@ class Main
         {
             if (userTurn = 89)
             {
-                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                while(Main.loopCondition(gameBoard, winner))
                 {
                     do Board.userMove(gameBoard, userSymbol);
                     let winner = Board.isWinning(gameBoard);
-                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    if (Main.loopCondition(gameBoard, winner))
                     {
                         do Board.randomMove(gameBoard, opponentSymbol);
                         let winner = Board.isWinning(gameBoard);
@@ -34,11 +34,11 @@ class Main
                 }
             }
             else
-            {   while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+            {   while(Main.loopCondition(gameBoard, winner))
                 {
                     do Board.randomMove(gameBoard, opponentSymbol);
                     let winner = Board.isWinning(gameBoard);
-                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    if (Main.loopCondition(gameBoard, winner))
                     {
                         do Board.userMove(gameBoard, userSymbol);
                         let winner = Board.isWinning(gameBoard);
@@ -50,11 +50,11 @@ class Main
         {
             if (userTurn = 89)
             {
-                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                while(Main.loopCondition(gameBoard, winner))
                 {
                     do Board.userMove(gameBoard, userSymbol);
                     let winner = Board.isWinning(gameBoard);
-                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    if (Main.loopCondition(gameBoard, winner))
                     {
                         do Board.userMove(gameBoard, opponentSymbol);
                         let winner = Board.isWinning(gameBoard);
@@ -63,11 +63,11 @@ class Main
             }
             else
             {
-                while(~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                while(Main.loopCondition(gameBoard, winner))
                 {
                     do Board.userMove(gameBoard, opponentSymbol);
                     let winner = Board.isWinning(gameBoard);
-                    if (~winner & (Board.emptyCellsNum(gameBoard) > 0))
+                    if (Main.loopCondition(gameBoard, winner))
                     {
                         do Board.userMove(gameBoard, userSymbol);
                         let winner = Board.isWinning(gameBoard);
@@ -116,6 +116,9 @@ class Main
         }
         return choices;
     }
-    
+    function boolean loopCondition(Array board, boolean winner)
+    {
+        return ~winner & (Board.emptyCellsNum(board) > 0);
+    }  
 
 }

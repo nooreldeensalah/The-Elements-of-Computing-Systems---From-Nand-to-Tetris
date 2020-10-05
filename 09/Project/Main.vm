@@ -57,13 +57,9 @@ if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 label WHILE_EXP0
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 not
 if-goto WHILE_END0
 push local 5
@@ -73,13 +69,9 @@ pop temp 0
 push local 5
 call Board.isWinning 1
 pop local 6
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
@@ -96,13 +88,9 @@ label WHILE_END0
 goto IF_END2
 label IF_FALSE2
 label WHILE_EXP1
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 not
 if-goto WHILE_END1
 push local 5
@@ -112,13 +100,9 @@ pop temp 0
 push local 5
 call Board.isWinning 1
 pop local 6
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
@@ -147,13 +131,9 @@ if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
 label WHILE_EXP2
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 not
 if-goto WHILE_END2
 push local 5
@@ -163,13 +143,9 @@ pop temp 0
 push local 5
 call Board.isWinning 1
 pop local 6
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
@@ -186,13 +162,9 @@ label WHILE_END2
 goto IF_END6
 label IF_FALSE6
 label WHILE_EXP3
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 not
 if-goto WHILE_END3
 push local 5
@@ -202,13 +174,9 @@ pop temp 0
 push local 5
 call Board.isWinning 1
 pop local 6
-push local 6
-not
 push local 5
-call Board.emptyCellsNum 1
-push constant 0
-gt
-and
+push local 6
+call Main.loopCondition 2
 if-goto IF_TRUE8
 goto IF_FALSE8
 label IF_TRUE8
@@ -718,4 +686,13 @@ pop that 0
 goto WHILE_EXP2
 label WHILE_END2
 push local 0
+return
+function Main.loopCondition 0
+push argument 1
+not
+push argument 0
+call Board.emptyCellsNum 1
+push constant 0
+gt
+and
 return
