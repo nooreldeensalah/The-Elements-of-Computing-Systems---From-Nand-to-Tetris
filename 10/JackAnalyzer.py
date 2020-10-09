@@ -5,7 +5,7 @@ import re
 
 stringflag = 0
 string_holder = ""
-input_arg = argv[1]
+input_arg = "./Main.jack"
 keywords = [
     "class",
     "constructor",
@@ -88,6 +88,7 @@ def JackTokenizer(input_file):
                             if stringflag == 2:
                                 writer.write(f"<stringConstant> {string_holder} </stringConstant>\n")
                                 string_holder = ""
+                                stringflag = 0
                         else:
                             writer.write(f"<identifier> {token} </identifier>\n")
         writer.write("</tokens>")
@@ -100,6 +101,6 @@ def CompilationEngine():
 def main():
     JackTokenizer(input_arg)
 
-
+main()
 if __name__ == "__main__":
     main()
