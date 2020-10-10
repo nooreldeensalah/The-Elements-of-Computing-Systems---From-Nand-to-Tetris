@@ -42,13 +42,12 @@ symbols = [
     "-",
     "*",
     "/",
-    "&amp;",
-    ",",
-    "&lt;",
-    "&gt;",
+    "&",
+    "|",
+    "<",
+    ">",
     "=",
     "~",
-    "|",
 ]
 symbols_markup = {"<": "&lt;", ">": "&gt;", '"': "&quot;", "&": "&amp;"}
 symbolspattern = re.compile(r"[);\[\]\.,~(-]")
@@ -67,8 +66,15 @@ def JackTokenizer(input_file):
                 for match in re.finditer(symbolspattern, code_line):
                     stripped_code[match.start()] = " " + match.group() + " "
                 for token in "".join(stripped_code).split():
-                    if token in symbols_markup:
-                        tokens_list.append(symbols_markup[token])
+                    if token in keywords:
+                        tokens_list.append((token, "keyword"))
+                    elif token in symbols:
+                        if token in symbols_markup:
+                            tokens_list.append((symbols_markup[token], "symbol"))
+                        else:
+                            tokens_list.append((token, "symbol"))
+                    elif token.isnumeric():
+                        tokens_list.append((token, "integerConstant"))
                     elif token.count('"') | stringflag == 1:
                         if stringflag == 0:
                             string_holder += token.strip('"')
@@ -77,11 +83,11 @@ def JackTokenizer(input_file):
                         if token.count('"'):
                             stringflag += 1
                         if stringflag == 2:
-                            tokens_list.append(string_holder)
+                            tokens_list.append((string_holder, "stringConstant"))
                             string_holder = ""
                             stringflag = 0
                     else:
-                        tokens_list.append(token)
+                        tokens_list.append((token, "identifier"))
     reader.close()
     return tokens_list
 
@@ -134,13 +140,31 @@ class CompilationEngine:
     def compile_expression_list(self):
         pass
 
+    def current_token(self):
+        return self.tokens[token_index]
+
+    def advance(self):
+        self.token_index += 1
+        return self.tokens[token_index]
+
+    def xml_tag_writer(self, tag):
+        self.output_file.write(f"<{tag}>\n")
+
+    def xml_token_writer(self):
+        if self.tokens[token_index] in symbols:
+            tag_name = "symbol"
+        elif self.tokens[token_index] in keywords:
+            tag_name = "keyword"
+
 
 def JackAnalyzer():
     if isfile(input_arg):
         tokens = JackTokenizer(input_arg)
+        for token in tokens:
+            print(token)
         output_file = input_arg.replace("jack", "xml")
         output_file = open(output_file, "w")
-        CompilationEngine(tokens, output_file)
+        CompilationEngine(tokens, output_file).compile_class()
         output_file.close()
     else:
         jack_files = list(filter(lambda x: x.endswith("jack"), listdir(input_arg)))
@@ -148,7 +172,7 @@ def JackAnalyzer():
             tokens = JackTokenizer(file)
             output_file = file.replace("jack", "xml")
             output_file = open(output_file, "w")
-            CompilationEngine(tokens, output_file)
+            CompilationEngine(tokens, output_file).compile_class()
             output_file.close()
 
 
