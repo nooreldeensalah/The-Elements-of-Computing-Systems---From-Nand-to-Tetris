@@ -388,6 +388,7 @@ def JackAnalyzer():
         output_file.close()
     else:
         jack_files = list(filter(lambda x: x.endswith("jack"), listdir(input_arg)))
+        jack_files = map(lambda x: f'./{input_arg}/' + x, jack_files)
         for file in jack_files:
             tokens = JackTokenizer(file)
             output_file = file.replace("jack", "xml")
